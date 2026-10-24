@@ -1,7 +1,7 @@
 # CLAUDE.md
 
 ## Project
-HackNotts '26 (theme: Y2K). 24-hour hackathon build, team of 4 (1 developer, 3 non-technical). Optimise for a working, impressive live demo over completeness.
+HackNotts '26 (theme: Y2K). 24-hour hackathon build, team of 4. Optimise for a working, impressive live demo over completeness.
 
 **Concept:** a Y2K-era Tamagotchi / Club Penguin-style web app. Each user raises an AI-powered pet that is a "millennium bug" that survived 1999. If neglected, it glitches (dates break, UI corrupts). Users can befriend other users' pets in real time, join clubs, draw their own pet in a pixel-art editor, and play one mini-game to earn coins.
 
