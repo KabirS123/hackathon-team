@@ -57,7 +57,7 @@ supabase/
 - `messages`: id, room (text: club id or pet-pair key), sender_pet_id, content, created_at
 
 ## Realtime design
-- One presence channel `lobby` for online pets (id, name, position, pixel_data).
+- One channel `lobby`: presence carries identity only (id, userId, name, pixel_data, stage); positions go over broadcast (throttled absolute targets + speed).
 - One channel per club `club:<id>` for chat + pet positions.
 - Pet-to-pet visits: the visiting client generates both pets' dialogue via `/api/chat` and broadcasts the result so both owners see the same conversation.
 
