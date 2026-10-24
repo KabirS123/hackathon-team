@@ -10,7 +10,7 @@ HackNotts '26 (theme: Y2K). 24-hour hackathon build, team of 4. Optimise for a w
 - Supabase: Postgres, Auth, Realtime (presence + broadcast)
 - `98.css` for the Windows 98 look (retro windows, buttons, title bars)
 - LLM called from a Next.js route handler (`/api/chat`), server-side only
-- Deploy: Vercel
+- Deploy: Vercel, Public URL
 
 ## Rules
 - Keep it simple. No new libraries without asking first.
@@ -22,6 +22,9 @@ HackNotts '26 (theme: Y2K). 24-hour hackathon build, team of 4. Optimise for a w
 - Before large changes, plan first and list the files you will touch. Don't rewrite files wholesale to fix small bugs.
 - Add short comments only where logic is non-obvious. The developer must be able to explain the code to judges.
 - Mobile layout is low priority. Desktop browser is the demo target.
+- “The app must work for a brand-new visitor with no setup: open URL, enter a name, get a pet.”
+- “Rate-limit /api/chat per user.”
+- “No Electron. The Chrome extension is a stretch goal only; don’t start it unless told.”
 
 ## Folder structure
 ```
@@ -82,6 +85,10 @@ Teammates drop art/audio into `/public` using agreed filenames. Don't rename or 
 9. Seeded demo account, final polish
 
 Feature freeze at 09:00 on Sunday. After that: bug fixes and demo prep only.
+
+## Stretch features
+1. Chrome extension which allows the pet to be injected into other browser tabs 
+
 
 ## Commands
 - `npm run dev`: local dev server
