@@ -48,16 +48,20 @@ supabase/
 
 ## Data model (keep column names exactly as written)
 - `profiles`: id (uuid, = auth user id), username, coins (int, default 0), created_at
-- `pets`: id, owner_id (-> profiles.id), name, personality (text), pixel_data (jsonb, 16x16 grid of colour strings), hunger (int 0-100), mood (int 0-100), glitch_level (int 0-100), last_fed_at, created_at
+- `pets`: id, owner_id (-> profiles.id), name, personality (text), pixel_data (jsonb, 16x16 grid of colour strings), hunger (int 0-100), mood (int 0-100, average of the needs), love (int 0-100), cleanliness (int 0-100), health (int 0-100), fun (int 0-100), sleep (int 0-100), glitch_level (int 0-100), last_fed_at, created_at
+- `pet_progress`: pet_id (-> pets.id), xp (int), owned_items (jsonb, shop item ids), hat (text), glasses (text), wallpaper (text). Coins stay on `profiles.coins`.
+- `pet_brain`: pet_id (-> pets.id), traits (jsonb: cheer, play, cling, sweet, each -100 to 100), likes (jsonb), memories (jsonb, newest 20), counts (jsonb), owner_name (text), reflection (text), words (jsonb, vocabulary), skills (jsonb: thinking, motor, social, creativity XP), stage (int: 0 toddler .. 3 adult), age (int 0-100 through the stage)
 - `friendships`: id, requester_id, addressee_id, status ('pending' | 'accepted'), created_at
 - `clubs`: id, name, description, owner_id, created_at
 - `club_members`: club_id, user_id, joined_at
 - `messages`: id, room (text: club id or pet-pair key), sender_pet_id, content, created_at
 
 ## Realtime design
-- One presence channel `lobby` for online pets (id, name, position, pixel_data).
+- One channel `lobby`: presence carries identity only (id, userId, name, pixel_data, stage); positions go over broadcast (throttled absolute targets + speed).
 - One channel per club `club:<id>` for chat + pet positions.
 - Pet-to-pet visits: the visiting client generates both pets' dialogue via `/api/chat` and broadcasts the result so both owners see the same conversation.
+- Pong: challenges go over `lobby`; each game gets its own `pong:<id>` channel. Both screens run the same ball maths (`lib/pong.ts`) and each player's screen judges hits on its own pet, so only hits, misses and paddle positions are sent (~20 msgs/s per game).
+- Message budget: the free Supabase plan allows 100 realtime messages/s for the whole project and disconnects clients above it. Throttle anything that streams.
 
 ## AI pet behaviour
 - Each pet has a `personality` prompt. Replies must be short (1-2 sentences), in character, with 2000-era slang.
