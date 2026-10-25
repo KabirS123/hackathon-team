@@ -60,6 +60,8 @@ supabase/
 - One channel `lobby`: presence carries identity only (id, userId, name, pixel_data, stage); positions go over broadcast (throttled absolute targets + speed).
 - One channel per club `club:<id>` for chat + pet positions.
 - Pet-to-pet visits: the visiting client generates both pets' dialogue via `/api/chat` and broadcasts the result so both owners see the same conversation.
+- Pong: challenges go over `lobby`; each game gets its own `pong:<id>` channel. Both screens run the same ball maths (`lib/pong.ts`) and each player's screen judges hits on its own pet, so only hits, misses and paddle positions are sent (~20 msgs/s per game).
+- Message budget: the free Supabase plan allows 100 realtime messages/s for the whole project and disconnects clients above it. Throttle anything that streams.
 
 ## AI pet behaviour
 - Each pet has a `personality` prompt. Replies must be short (1-2 sentences), in character, with 2000-era slang.
